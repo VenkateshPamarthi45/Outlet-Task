@@ -4,13 +4,9 @@ import java.util.ArrayList;
 
 public class Outlet {
 
-	private String title; 
-	private String thumbnailUrl;
-	private String location;
+	private String title, thumbnailUrl,location;
 	private int offers;
-	private double latitudenum;
-	private double longitudenum;
-	private double distancenum;
+	private double latitudenum, longitudenum, distancenum;
 	private ArrayList<String> categories;
 
 	
