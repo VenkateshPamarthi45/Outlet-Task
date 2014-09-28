@@ -15,175 +15,206 @@ public class GPSTracker extends Service implements LocationListener
 {
 	private final Context mContext;
 
-    //flag for GPS Status
-    boolean isGPSEnabled = false;
+	//flag for GPS Status
+	boolean isGPSEnabled = false;
 
-    //flag for network status
-    boolean isNetworkEnabled = false;
+	//flag for network status
+	boolean isNetworkEnabled = false;
 
-    boolean canGetLocation = false;
+	boolean canGetLocation = false;
 
-    Location location;
-    double latitude;
-    double longitude;
+	Location location;
+	double latitude;
+	double longitude;
 
-    //The minimum distance to change updates in metters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; //10 metters
+	//The minimum distance to change updates in meters
+	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; //10 meters
 
-    //The minimum time beetwen updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
+	//The minimum time between updates in milliseconds
+	private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
 
-    //Declaring a Location Manager
-    protected LocationManager locationManager;
+	//Declaring a Location Manager
+	protected LocationManager locationManager;
 
-    public GPSTracker(Context context) 
-    {
-        this.mContext = context;
-        getLocation();
-    }
-    public Location getLocation()
-    {
-        try
-        {
-            locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
+	public GPSTracker(Context context) 
+	{
+		this.mContext = context;
+		getLocation();
+	}
+	public Location getLocation()
+	{
+		try
+		{
+			locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
 
-            //getting GPS status
-            isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+			//getting GPS status
+			isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-            //getting network status
-            isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+			//getting network status
+			isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-            if (!isGPSEnabled && !isNetworkEnabled)
-            {
-            	Toast.makeText(getApplicationContext(), "Please Enable GPS or Network", Toast.LENGTH_SHORT).show();
-            }
-            else
-            {
-                this.canGetLocation = true;
+			if (!isGPSEnabled && !isNetworkEnabled)
+			{
+				Toast.makeText(getApplicationContext(), "Please Enable GPS or Network", Toast.LENGTH_SHORT).show();
+			}
+			else
+			{
+				this.canGetLocation = true;
 
-                //First get location from Network Provider
-                if (isNetworkEnabled)
-                {
-                    locationManager.requestLocationUpdates(
-                            LocationManager.NETWORK_PROVIDER,
-                            MIN_TIME_BW_UPDATES,
-                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+				//First get location from Network Provider
+				if (isNetworkEnabled)
+				{
+					locationManager.requestLocationUpdates(
+							LocationManager.NETWORK_PROVIDER,
+							MIN_TIME_BW_UPDATES,
+							MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
 
-                    Log.d("Network", "Network");
+					Log.d("Network", "Network");
 
-                    if (locationManager != null)
-                    {
-                        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        updateGPSCoordinates();
-                    }
-                }
+					if (locationManager != null)
+					{
+						location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+						updateGPSCoordinates();
+					}
+				}
 
-                //if GPS Enabled get lat/long using GPS Services
-                if (isGPSEnabled)
-                {
-                    if (location == null)
-                    {
-                        locationManager.requestLocationUpdates(
-                                LocationManager.GPS_PROVIDER,
-                                MIN_TIME_BW_UPDATES,
-                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+				//if GPS Enabled get lat/long using GPS Services
+				if (isGPSEnabled)
+				{
+					if (location == null)
+					{
+						locationManager.requestLocationUpdates(
+								LocationManager.GPS_PROVIDER,
+								MIN_TIME_BW_UPDATES,
+								MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
 
-                        Log.d("GPS Enabled", "GPS Enabled");
+						Log.d("GPS Enabled", "GPS Enabled");
 
-                        if (locationManager != null)
-                        {
-                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                            updateGPSCoordinates();
-                        }
-                    }
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            //e.printStackTrace();
-            Log.e("Error : Location", "Impossible to connect to LocationManager", e);
-        }
+						if (locationManager != null)
+						{
+							location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+							updateGPSCoordinates();
+						}
+					}
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			//e.printStackTrace();
+			Log.e("Error : Location", "Impossible to connect to LocationManager", e);
+		}
 
-        return location;
-    }
+		return location;
+	}
 
-    public void updateGPSCoordinates()
-    {
-        if (location != null)
-        {
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-        }
-    }
+	public void updateGPSCoordinates()
+	{
+		if (location != null)
+		{
+			latitude = location.getLatitude();
+			longitude = location.getLongitude();
+		}
+	}
 
-    /**
-     * Stop using GPS listener
-     * Calling this function will stop using GPS in your app
-     */
+	/**
+	 * Stop using GPS listener
+	 * Calling this function will stop using GPS in your app
+	 */
 
-    public void stopUsingGPS()
-    {
-        if (locationManager != null)
-        {
-            locationManager.removeUpdates(GPSTracker.this);
-        }
-    }
+	public void stopUsingGPS()
+	{
+		if (locationManager != null)
+		{
+			locationManager.removeUpdates(GPSTracker.this);
+		}
+	}
 
-    /**
-     * Function to get latitude
-     */
-    public double getLatitude()
-    {
-        if (location != null)
-        {
-            latitude = location.getLatitude();
-        }
+	/**
+	 * Function to get latitude
+	 */
+	public double getLatitude()
+	{
+		if (location != null)
+		{
+			latitude = location.getLatitude();
+		}
 
-        return latitude;
-    }
+		return latitude;
+	}
 
-    /**
-     * Function to get longitude
-     */
-    public double getLongitude()
-    {
-        if (location != null)
-        {
-            longitude = location.getLongitude();
-        }
+	/**
+	 * Function to get longitude
+	 */
+	public double getLongitude()
+	{
+		if (location != null)
+		{
+			longitude = location.getLongitude();
+		}
 
-        return longitude;
-    }
-    /**
-     * Function to check GPS/wifi enabled
-     */
-    public boolean canGetLocation()
-    {
-        return this.canGetLocation;
-    }
+		return longitude;
+	}
+	/**
+	 * Function to check GPS/wifi enabled
+	 */
+	public boolean canGetLocation()
+	{
+		return this.canGetLocation;
+	}
 	@Override
 	public void onLocationChanged(Location arg0) {
-		// TODO Auto-generated method stub
-		
+		if (isNetworkEnabled)
+		{
+			locationManager.requestLocationUpdates(
+					LocationManager.NETWORK_PROVIDER,
+					MIN_TIME_BW_UPDATES,
+					MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+
+			Log.d("Network", "Network");
+
+			if (locationManager != null)
+			{
+				location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+				updateGPSCoordinates();
+			}
+		}
+
+		//if GPS Enabled get lat/long using GPS Services
+		if (isGPSEnabled)
+		{
+			if (location == null)
+			{
+				locationManager.requestLocationUpdates(
+						LocationManager.GPS_PROVIDER,
+						MIN_TIME_BW_UPDATES,
+						MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+
+				Log.d("GPS Enabled", "GPS Enabled");
+
+				if (locationManager != null)
+				{
+					location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+					updateGPSCoordinates();
+				}
+			}
+		}
+
 	}
 
 	@Override
 	public void onProviderDisabled(String arg0) {
-		// TODO Auto-generated method stub
-		
+
+
 	}
 
 	@Override
 	public void onProviderEnabled(String arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -191,7 +222,4 @@ public class GPSTracker extends Service implements LocationListener
 	{
 		return null;
 	}
-
-
 }
-
