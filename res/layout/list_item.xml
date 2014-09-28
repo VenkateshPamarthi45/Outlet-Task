@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+     xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    android:background="@anim/layoutshape">
+ 
+    <!-- Name Label -->
+ 
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/imageurlid"
+        android:layout_width="90dip"
+        android:layout_height="90dip"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="8dp" />
+ 
+    <!-- Name label -->
+    <TextView
+        android:id="@+id/nameid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/imageurlid"
+        android:text="@string/name_txt"
+        android:textSize="18sp"
+        android:textColor="#5d5d5d"
+        android:textStyle="bold" />
+    
+    <!-- Coupons label -->
+    <TextView
+        android:id="@+id/offersid"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nameid"
+        android:layout_toRightOf="@id/imageurlid"
+        android:paddingBottom="2dip"
+        android:text="@string/offers_txt"
+        android:textColor="#5d5d5d" />
+    
+    <!-- categories label -->
+    <TextView
+        android:id="@+id/categoriesid1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageurlid"
+        android:layout_marginTop="2dp"
+        android:paddingBottom="2dip"
+        android:text="@string/categories_txt"
+        android:layout_marginLeft="5dp"
+        android:textColor="#000000" />
+        
+    <!-- NeighbourhoodName label -->
+    <TextView
+        android:id="@+id/NeighbourhoodNameid"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/categoriesid1"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="5dp"
+        android:paddingBottom="2dip"
+        android:text="@string/location_txt"
+        android:textColor="#000000" />
+</RelativeLayout>

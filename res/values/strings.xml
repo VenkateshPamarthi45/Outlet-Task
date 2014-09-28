@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Coupondunia Task</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="user_location">Your location</string>
+    <string name="latitude_txt">Latitude : </string>
+    <string name="longitude_txt">Longitude : </string>
+    <string name="name_txt">Name </string>
+    <string name="offers_txt">Offers </string>
+    <string name="categories_txt">Categories</string>
+    <string name="location_txt">location </string>
+    
+</resources>
