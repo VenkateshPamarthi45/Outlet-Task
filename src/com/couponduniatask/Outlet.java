@@ -13,7 +13,9 @@ public class Outlet {
 	private double distancenum;
 	private ArrayList<String> categories;
 
-	
+	public Outlet() {		
+	}
+
 	public Outlet(String name, String thumbnailUrl, int offers, String location,
 			ArrayList<String> categories) {
 		this.title = name;
@@ -23,8 +25,7 @@ public class Outlet {
 		this.categories = categories;
 	}
 
-	public Outlet() {		
-	}
+
 
 	public String getTitle() {
 		return title;
